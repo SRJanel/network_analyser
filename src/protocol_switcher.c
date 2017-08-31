@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 22:27:44 2017 
-** Last update Sun Aug 20 19:07:36 2017 
+** Last update Wed Aug 30 16:03:07 2017 
 */
 
 #include <stdio.h>
@@ -34,7 +34,7 @@ char		protocol_switcher(const unsigned char *packet,
       fprintf(stdout, "g_protocols[%ld].protocol_tag: %s\n", protocol, g_protocols[protocol].protocol_tag);
       fprintf(stdout, "g_protocols[%ld].value: 0x%x\n", protocol, g_protocols[protocol].value);
       g_protocols[protocol].function(packet);
-     return (TRUE);
+      return (TRUE);
     }
   g_protocols[LIMIT - 1].function(packet);
   return (FALSE);

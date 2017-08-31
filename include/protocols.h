@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:50:07 2017 
-** Last update Sun Aug 20 19:32:04 2017 
+** Last update Thu Aug 31 21:01:39 2017 
 */
 
 #ifndef PROTOCOLS_H_
@@ -16,7 +16,8 @@
 
 void			arp_packet(const unsigned char *);
 void			ip_packet(const unsigned char *);
-void			tcp_packet(const unsigned char *);
+void			tcp_segment(const unsigned char *);
+void			udp_segment(const unsigned char *);
 void			icmp_packet(const unsigned char *);
 void			unknown_packet(const unsigned char *);
 char			protocol_switcher(const unsigned char *,
@@ -32,7 +33,8 @@ typedef struct          s_protocols
 # define PROTOCOLS_TABLE						\
   ENTRY(ARP = 0,	"ARP",		ETH_P_ARP, &arp_packet)		\
   ENTRY(IPv4,		"IPv4",		ETH_P_IP, &ip_packet)		\
-  ENTRY(TCP,		"TCP",		IPPROTO_TCP, &tcp_packet)	\
+  ENTRY(TCP,		"TCP",		IPPROTO_TCP, &tcp_segment)	\
+  ENTRY(UDP,		"UDP",		IPPROTO_UDP, &udp_segment)	\
   ENTRY(ICMP,		"ICMP",		IPPROTO_ICMP, &icmp_packet)	\
   ENTRY(UNKNOWN,	"unknown",	0xDEAD, &unknown_packet)	\
 
