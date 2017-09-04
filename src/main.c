@@ -5,18 +5,18 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:02:34 2017 
-** Last update Wed Aug 30 16:37:20 2017 
+** Last update Mon Sep  4 12:46:28 2017 
 */
 
 
 
 
-#include <string.h>
+#include <ctype.h>
 #include <unistd.h>
+#include <string.h>
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <arpa/inet.h>
-
 #include <netinet/ip.h>
 #include <linux/if.h>
 #include <linux/if_packet.h>
@@ -30,18 +30,17 @@ static void	__attribute__((unused))usage(char *prog_name)
 	  "<iface>\tIf not specified, listening on all interfaces\n", prog_name);
 }
 
-/* void		dump_packet(const char *packet) */
-/* { */
-  /* size_t	i; */
+void		dump_packet(const unsigned char * const packet,
+			    const size_t size)
+{
+  ssize_t	i;
 
-  /* i = 0; */
-  /* PRINT_POSITION; */
-  /* while (i < IP_MAXPACKET) */
-  /*   { */
-  /*     write(1, &packet[i], IP_MAXPACKET); */
-  /*     ++i; */
-  /*   } */
-/* } */
+  i = -1;
+  while (++i < (ssize_t)size)
+    write(1, (isprint(packet[i]))
+	  ? (const char *)(&packet[i])
+	  : ("."), 1);
+}
 
 static char		raw_bind_iface(const int sd, const char *iface)
 {
@@ -57,7 +56,7 @@ static char		raw_bind_iface(const int sd, const char *iface)
   sockaddr.sll_family = AF_PACKET;
   sockaddr.sll_ifindex = ifr.ifr_ifindex;
   sockaddr.sll_protocol = htons(ETH_P_ALL);
-  return (bind(sd, (struct sockaddr *)&sockaddr, sizeof sockaddr) == -1);
+  return (bind(sd, (struct sockaddr *)&sockaddr, sizeof sockaddr));
 }
 
 int			main(int argc, char *argv[])
@@ -66,7 +65,7 @@ int			main(int argc, char *argv[])
   unsigned char		packet[IP_MAXPACKET] = {0};
 
   if ((sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) == -1)
-    return (EXIT_FAILURE);
+    return (PRINT_ERROR("Socket creation failed:"), EXIT_FAILURE);
   if (argc == 2 && raw_bind_iface(sd, argv[1]) == -1)
     return (PRINT_ERROR("Bind failed:"), EXIT_FAILURE);
   while ("true")

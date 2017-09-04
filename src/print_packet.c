@@ -5,16 +5,18 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:29:04 2017 
-** Last update Thu Aug 31 21:10:38 2017 
+** Last update Mon Sep  4 13:23:15 2017 
 */
 
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <linux/udp.h>
 #include <linux/tcp.h>
+#include <linux/icmp.h>
 #include <linux/ip.h>
 #include <linux/if_arp.h>
 #include <linux/if_ether.h>
+#include "network_analyzer.h"
 #include "utils.h"
 #include "protocols.h"
 #include "debug.h"
@@ -44,6 +46,8 @@ void		arp_packet(const unsigned char *packet)
   PRINT_IP_ADDRESS("Sender IP address: ", payload->ar_sip);
   PRINT_MAC_ADDRESS("Target MAC address: ", payload->ar_tha);  
   PRINT_IP_ADDRESS("Target IP address: ", payload->ar_tip);
+  dump_packet(packet + sizeof(struct ethhdr), sizeof(struct arphdr));
+
 }
 
 void		ip_packet(const unsigned char *packet)
@@ -64,6 +68,8 @@ void		ip_packet(const unsigned char *packet)
   fprintf(stdout, "Header Checksum: 0x%x\n", ntohs(iphdr->check));
   fprintf(stdout, "Source Address: %s\n", inet_ntoa((struct in_addr){iphdr->saddr}));
   fprintf(stdout, "Destination Address: %s\n", inet_ntoa((struct in_addr){iphdr->daddr}));
+
+  dump_packet(packet + sizeof(struct ethhdr), sizeof(struct iphdr));
   protocol_switcher(packet, iphdr->protocol);
 }
 
@@ -86,8 +92,12 @@ void		tcp_segment(const unsigned char *packet)
   fprintf(stdout, "Checksum : 0x%x\n", ntohs(tcphdr->check));
   fprintf(stdout, "URG Ptr : %u\n", ntohs(tcphdr->urg_ptr));
 
+  dump_packet(packet + sizeof(struct ethhdr)
+	      + (((struct iphdr *)(packet + sizeof(struct ethhdr)))->ihl * 4), sizeof(struct tcphdr));
+  /* WRONG !! dump packet further than sizeof(struct tcphdr) !! */
 }
 
+/* CHECK!! no WORD * ihl ? */
 void		udp_segment(const unsigned char *packet)
 {
   struct udphdr	*udphdr;
@@ -100,16 +110,27 @@ void		udp_segment(const unsigned char *packet)
   fprintf(stdout, "Checksum: 0x%x\n", ntohs(udphdr->check));
 }
 
-void		icmp_packet(const unsigned char *packet)
+void			icmp_packet(const unsigned char *packet)
 {
+  struct icmphdr	*icmphdr;
+
   PRINT_POSITION;
-  /* sleep(3); */
-  (void)packet;
+  icmphdr = (struct icmphdr *)(packet + sizeof(struct ethhdr) + sizeof(struct iphdr));
+  fprintf(stdout, "Type: %d\n", icmphdr->type);
+  fprintf(stdout, "Code: %d\n", icmphdr->code);
+  fprintf(stdout, "Checksum: 0x%x\n", ntohs(icmphdr->checksum));
+
+  dump_packet(packet + sizeof(struct ethhdr) + sizeof(struct iphdr), sizeof (struct icmphdr));
+  sleep(30);
 }
 
 void		unknown_packet(const unsigned char *packet)
 {
   PRINT_POSITION;
+  /* unknown_packet can be called at any moment (ex: if it is a x25 packet, or even after an ip packet if the ip->protocol is "unknown" */
+  /* -> solutions: print whole packet ? */
+
+  /* dump_packet(packet + sizeof(struct ethdr) +  */
   (void)packet;
 }
 
@@ -117,11 +138,13 @@ static void	ethernet_frame(const unsigned char *packet)
 {
   struct ethhdr	*ethhdr;
 
+  PRINT_POSITION;
   ethhdr = (struct ethhdr *)packet;
-  PRINT_MAC_ADDRESS("ethhdr->h_dest", ethhdr->h_dest);
-  PRINT_MAC_ADDRESS("ethhdr->h_source", ethhdr->h_source);
-  fprintf(stdout, "ethhdr->h_proto: %d\n", ntohs(ethhdr->h_proto));
-  protocol_switcher(packet, ntohs(ethhdr->h_proto));  
+  PRINT_MAC_ADDRESS("Destination: ", ethhdr->h_dest);
+  PRINT_MAC_ADDRESS("Source: ", ethhdr->h_source);
+  fprintf(stdout, "Type: %d\n", ntohs(ethhdr->h_proto));
+  dump_packet(packet, sizeof(struct ethhdr));
+  protocol_switcher(packet, ntohs(ethhdr->h_proto));
 }
 
 void		analyze_packet(const unsigned char *packet)
