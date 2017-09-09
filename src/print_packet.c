@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:29:04 2017 
-** Last update Sat Sep  9 03:12:09 2017 
+** Last update Sat Sep  9 19:53:24 2017 
 */
 
 #include <ctype.h>
@@ -32,18 +32,29 @@ static void	dump_raw_data(const unsigned char * const packet,
 			      const size_t size)
 {
   ssize_t	i;
-
+  ssize_t	temp;
+  
   i = -1;
-  write(1, " | Data:", 8);
+  fprintf(stdout, " | Data:");
   while (++i < (ssize_t)size)
     {
       if (!(i % RAW_DATA_BYTE_PER_LINE))
-	write(1, "\n |\t", 4);
+	{
+	  fprintf(stdout, "\n |\t");
+	  temp = i;
+	  fprintf(stdout, "%02x ", packet[temp++]);
+	  while (temp < (ssize_t)size
+		 && (temp % RAW_DATA_BYTE_PER_LINE))
+	    fprintf(stdout, "%02x ", packet[temp++]);
+	  fprintf(stdout, "\t");
+	}
+      fflush(stdout);
       write(1, (isprint(packet[i]))
 	    ? (&packet[i])
 	    : (const unsigned char *)("."), 1);
     }
-  write(1, "\n |", 3);
+  fprintf(stdout, "\n |");
+  fflush(stdout);
 }
 
 void		dump_arp_packet(const unsigned char *packet,
