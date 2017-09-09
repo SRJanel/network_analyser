@@ -5,12 +5,13 @@
 ## Login SRJanel <n******.*********@epitech.eu>
 ## 
 ## Started on  Sat Aug 19 20:58:06 2017 
-## Last update Sat Sep  9 01:47:33 2017 
+## Last update Sat Sep  9 17:37:53 2017 
 ##
 
 SRC	= src/main.c \
 	src/print_packet.c \
 	src/protocol_switcher.c \
+	src/network_setup.c \
 
 OBJ	= $(SRC:.c=.o)
 
