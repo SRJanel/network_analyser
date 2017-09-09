@@ -5,7 +5,7 @@
 ## Login SRJanel <n******.*********@epitech.eu>
 ## 
 ## Started on  Sat Aug 19 20:58:06 2017 
-## Last update Tue Aug 22 21:03:08 2017 
+## Last update Sat Sep  9 01:47:33 2017 
 ##
 
 SRC	= src/main.c \
@@ -18,12 +18,12 @@ NAME	= my_network_analyzer
 
 RM	= rm -f
 
-CC	= gcc -std=c99
+CC	= gcc
 
 CFLAGS	+= -I./include
 CFLAGS	+= -Wall -Wextra -Werror
-#CFLAGS	+= -ansi -pedantic-errors
-CFLAGS	+= -ggdb3
+CFLAGS	+= -pedantic-errors # -ansi
+#CFLAGS	+= -ggdb3
 
 all: $(NAME)
 

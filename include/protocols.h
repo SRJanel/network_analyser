@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:50:07 2017 
-** Last update Thu Aug 31 22:02:23 2017 
+** Last update Sat Sep  9 02:04:36 2017 
 */
 
 #ifndef PROTOCOLS_H_
@@ -14,29 +14,33 @@
 # include <linux/if_ether.h>
 # include <linux/in.h>
 
-void			arp_packet(const unsigned char *);
-void			ip_packet(const unsigned char *);
-void			tcp_segment(const unsigned char *);
-void			udp_segment(const unsigned char *);
-void			icmp_packet(const unsigned char *);
-void			unknown_packet(const unsigned char *);
-char			protocol_switcher(const unsigned char *,
+void			dump_arp_packet(const unsigned char *, const size_t);
+void			dump_ip_packet(const unsigned char *, const size_t);
+void			dump_tcp_segment(const unsigned char *, const size_t);
+void			dump_udp_segment(const unsigned char *, const size_t);
+void			dump_icmp_packet(const unsigned char *, const size_t);
+void			dump_unknown_packet(const unsigned char *, const size_t);
+void			dump_ethernet_frame(const unsigned char *, const size_t);
+void			protocol_switcher(const unsigned char *,
+					  const size_t,
 					  const unsigned int);
 
 typedef struct          s_protocols
 {
   char			*protocol_tag;
   unsigned int		value;
-  void			(*function)(const unsigned char *buffer);
+  void			(*function)(const unsigned char *packet,
+				    size_t packet_size);
 }                       t_protocols;
 
 # define PROTOCOLS_TABLE						\
-  ENTRY(ARP = 0,	"ARP",		ETH_P_ARP, &arp_packet)		\
-  ENTRY(IPv4,		"IPv4",		ETH_P_IP, &ip_packet)		\
-  ENTRY(TCP,		"TCP",		IPPROTO_TCP, &tcp_segment)	\
-  ENTRY(UDP,		"UDP",		IPPROTO_UDP, &udp_segment)	\
-  ENTRY(ICMP,		"ICMP",		IPPROTO_ICMP, &icmp_packet)	\
-  ENTRY(UNKNOWN,	"unknown",	0xDEAD, &unknown_packet)	\
+  ENTRY(ARP = 0,	"ARP",		ETH_P_ARP,	&dump_arp_packet) \
+  ENTRY(IPv4,		"IPv4",		ETH_P_IP,	&dump_ip_packet) \
+  ENTRY(TCP,		"TCP",		IPPROTO_TCP,	&dump_tcp_segment) \
+  ENTRY(UDP,		"UDP",		IPPROTO_UDP,	&dump_udp_segment) \
+  ENTRY(ICMP,		"ICMP",		IPPROTO_ICMP,	&dump_icmp_packet) \
+  ENTRY(UNKNOWN,	"UNKNOWN",	0xDEAD,		&dump_unknown_packet) \
+
 
 enum {
 # define ENTRY(a, b, c, d) a,
