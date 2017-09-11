@@ -5,7 +5,7 @@
 ## Login SRJanel <n******.*********@epitech.eu>
 ## 
 ## Started on  Sat Aug 19 20:58:06 2017 
-## Last update Mon Sep 11 03:00:11 2017 
+## Last update Mon Sep 11 05:09:55 2017 
 ##
 
 SRC	= src/main.c \
@@ -15,7 +15,7 @@ SRC	= src/main.c \
 
 OBJ	= $(SRC:.c=.o)
 
-NAME	= network_analyzer
+NAME	= network_analyser
 
 RM	= rm -f
 
