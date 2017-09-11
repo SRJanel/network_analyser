@@ -40,20 +40,21 @@ inline static void	usage(const char * const prog_name)
 	  "\t-i, --interface\t\tIf not specified, listening on all interfaces.\n" \
 	  "\t-p, --promiscious\tSet device to promiscious mode. Must be combined\n" \
 	  "\t\t\t\twith option -i (--interface).\n"			\
-	  "\t-f, --filter\t\tYou can specify a Linux Packet Filter (LPF).\n" \
+	  "\t-f, --filter\t\tYou can set a Linux Socket Filter (LSF).\n" \
 	  "\t\t\t\tExamples:\t-f \"tcp\".\n"				\
-	  "\t\t\t\t\t\t-f \"udp && src 42.42.42.42 && src port 4242\".\n" \
+	  "\t\t\t\t\t\t-f \"udp && src 127.0.0.1 && src port 4242\".\n" \
+	  "\t\t\t\t\t\t-f \"tcp[13] & 2!=0\". (Shows only SYN packets).\n" \
 	  "\t-h, --help\t\tDisplays this message.\n", prog_name);
 }
 
-static struct s_options {int help;
-  char *interface;
-  int promiscious; char *filter;}	get_args(int argc, char **argv)
+# define FORMAT int help; char *interface; int promiscious; char *filter;
+static struct s_options {FORMAT}	get_args(int argc, char **argv)
   {
+    # undef FORMAT
     int					c;
     int					index;
-    static struct s_options		options = {.0, NULL, .0, NULL};
-    static struct option		long_options[] =
+    struct s_options			options = {.0, NULL, .0, NULL};
+    struct option			long_options[] =
       {
 	{"interface", required_argument, NULL, 'i'},
 	{"filter", required_argument, NULL, 'f'},
@@ -78,7 +79,7 @@ static struct s_options {int help;
     return (options);
 }
 
-char			set_linux_packet_filter(const char * const filter_string)
+char			set_linux_socket_filter(const char * const filter_string)
 {
   struct sock_fprog	filter;
   int			i;
@@ -123,7 +124,7 @@ char			setup(int argc, char *argv[])
     return (EXIT_FAILURE);
 
   if (options.filter)
-    set_linux_packet_filter(options.filter);
+    set_linux_socket_filter(options.filter);
   return ((options.interface && raw_bind_iface(options.interface) == -1)
 	  ? (PRINT_ERROR("Bind failed:"), EXIT_FAILURE)
 	  : (EXIT_SUCCESS));

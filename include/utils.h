@@ -15,7 +15,7 @@
 # include <errno.h>
 
 # define RAW_DATA_BYTE_PER_LINE		16
-# define PRINT_POSITION			fprintf(stderr, "\n |-------- %s ----------\n", \
+# define PRINT_POSITION			fprintf(stdout, "\n |-------- %s ----------\n", \
 						__extension__ __FUNCTION__)
 
 # define PRINT_ERROR(MESG)		fprintf(stderr, "%s ERROR: %s\n", MESG, strerror(errno))

@@ -88,7 +88,7 @@ void		dump_ip_packet(const unsigned char *packet,
   iphdr = (struct iphdr *)(packet + sizeof(struct ethhdr)); 
   fprintf(stdout, " | Version: %u\n", iphdr->version);
   fprintf(stdout, " | Header Length: %u\n", iphdr->ihl);
-  fprintf(stdout, " | Differentiated Services Field: 0x%2x\n", iphdr->tos);
+  fprintf(stdout, " | Differentiated Services Field: 0x%02x\n", iphdr->tos);
   fprintf(stdout, " | Total Length: %u\n", ntohs(iphdr->tot_len));
   fprintf(stdout, " | Identification: 0x%x\n", ntohs(iphdr->id));
   /* apply masks */

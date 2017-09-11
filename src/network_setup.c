@@ -21,10 +21,9 @@ int			g_sd;
 
 char			raw_bind_iface(const char *iface)
 {
-  struct ifreq		ifr;
+  struct ifreq		ifr = {0};
   struct sockaddr_ll	sockaddr;
 
-  memset(&ifr, 0, sizeof ifr);
   strncpy(ifr.ifr_name, iface, IFNAMSIZ - 1);
   if (ioctl(g_sd, SIOCGIFINDEX, &ifr) == -1
       || setsockopt(g_sd, SOL_SOCKET, SO_BINDTODEVICE, &ifr, sizeof ifr) == -1)
