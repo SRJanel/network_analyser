@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:29:04 2017 
-** Last update Sat Sep  9 19:53:24 2017 
+** Last update Mon Sep 11 04:39:02 2017 
 */
 
 #include <ctype.h>
@@ -16,7 +16,6 @@
 #include <linux/icmp.h>
 #include <linux/ip.h>
 #include <linux/if_arp.h>
-#include <linux/if_ether.h>
 #include "utils.h"
 #include "protocols.h"
 

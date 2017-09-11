@@ -5,22 +5,17 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:02:34 2017 
-** Last update Sat Sep  9 20:56:57 2017 
+** Last update Mon Sep 11 04:34:41 2017 
 */
 
 #include <time.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <getopt.h>
 #include <signal.h>
 #include <stdlib.h>
-#include <sys/ioctl.h>
-#include <arpa/inet.h>
 #include <netinet/ip.h>
-#include <linux/if.h>
 #include <linux/filter.h>
-#include <linux/if_packet.h>
 #include <linux/if_ether.h>
 #include "protocols.h"
 #include "network.h"
