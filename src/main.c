@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:02:34 2017 
-** Last update Mon Sep 11 04:34:41 2017 
+** Last update Mon Sep 11 05:01:19 2017 
 */
 
 #include <time.h>
@@ -33,7 +33,7 @@ inline static void	usage(const char * const prog_name)
 {
   fprintf(stderr, "USAGE: %s [-ipfh]\n"					\
 	  "\t-i, --interface\t\tIf not specified, listening on all interfaces.\n" \
-	  "\t-p, --promiscious\tSet device to promiscious mode. Must be combined\n" \
+	  "\t-p, --promiscuous\tSet device to promiscuous mode. Must be combined\n" \
 	  "\t\t\t\twith option -i (--interface).\n"			\
 	  "\t-f, --filter\t\tYou can set a Linux Socket Filter (LSF).\n" \
 	  "\t\t\t\tExamples:\t-f \"tcp\".\n"				\
@@ -42,7 +42,7 @@ inline static void	usage(const char * const prog_name)
 	  "\t-h, --help\t\tDisplays this message.\n", prog_name);
 }
 
-# define FORMAT int help; char *interface; int promiscious; char *filter;
+# define FORMAT int help; char *interface; int promiscuous; char *filter;
 static struct s_options {FORMAT}	get_args(int argc, char **argv)
   {
     # undef FORMAT
@@ -53,7 +53,7 @@ static struct s_options {FORMAT}	get_args(int argc, char **argv)
       {
 	{"interface", required_argument, NULL, 'i'},
 	{"filter", required_argument, NULL, 'f'},
-	{"promiscious", no_argument, &options.promiscious, 1},
+	{"promiscuous", no_argument, &options.promiscuous, 1},
 	{"help", no_argument, &options.help, 1},
 	{NULL, 0, NULL, 0}
       };
@@ -67,7 +67,7 @@ static struct s_options {FORMAT}	get_args(int argc, char **argv)
 	else if (c == 'f')
 	  options.filter = optarg;
 	else if (c == 'p')
-	  options.promiscious = 1;
+	  options.promiscuous = 1;
 	else if (c == 'h' || c == '?')
 	  options.help = 1;
       }
@@ -114,8 +114,8 @@ char			setup(int argc, char *argv[])
     return (usage(argv[0]), EXIT_FAILURE);
   if ((g_sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL))) == -1)
     return (PRINT_ERROR("Socket creation failed:"), EXIT_FAILURE);
-  if (options.promiscious && options.interface
-      && set_promiscious_mode(options.interface) == -1)
+  if (options.promiscuous && options.interface
+      && set_promiscuous_mode(options.interface) == -1)
     return (EXIT_FAILURE);
 
   if (options.filter)

@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.******s@epitech.eu>
 ** 
 ** Started on  Sat Sep  9 17:36:32 2017 
-** Last update Mon Sep 11 04:37:38 2017 
+** Last update Mon Sep 11 04:59:08 2017 
 */
 
 #include <string.h>
@@ -35,7 +35,7 @@ char			raw_bind_iface(const char *iface)
   return (bind(g_sd, (struct sockaddr *)&sockaddr, sizeof sockaddr));
 }
 
-char			set_promiscious_mode(const char *iface)
+char			set_promiscuous_mode(const char *iface)
 {
   struct packet_mreq	mreq = {0};
   struct ifreq		ifr = {0};
@@ -46,7 +46,7 @@ char			set_promiscious_mode(const char *iface)
   mreq.mr_ifindex = ifr.ifr_ifindex;  
   mreq.mr_type = PACKET_MR_PROMISC;
   if (setsockopt(g_sd, SOL_PACKET, PACKET_ADD_MEMBERSHIP, &mreq, sizeof mreq) != 0)
-    return (PRINT_ERROR("Could not enter promiscious mode"), -1);
-  fprintf(stdout, "[+] Entered promiscious mode on %s\n", iface);
+    return (PRINT_ERROR("Could not enter promiscuous mode"), -1);
+  fprintf(stdout, "[+] Entered promiscuous mode on %s\n", iface);
   return (0);
 }

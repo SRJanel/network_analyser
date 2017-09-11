@@ -3,5 +3,5 @@ A mini packet sniffer coded in C using raw sockets which prints the raw data in 
 
 ## Usage
 Use -i (or --interface) [interface] to bind the raw socket and listen on a specific interface. If not specified then the socket listens on all interfaces.  
-Use -p (or --promiscious) alongside -i to set the interface to promiscious mode.  
+Use -p (or --promiscuous) alongside -i to set the interface to promiscuous mode.  
 Use -f (or --filter) [filter] to use Linux Socket Filtering (LSF) to attach a filter onto the socket and allow only certain types of data to come through the socket. ```tcpdump``` needs to be installed on the system as it is used to create the filter codes before sending them to the kernel.
