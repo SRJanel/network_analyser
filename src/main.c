@@ -5,13 +5,12 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:02:34 2017 
-** Last update Mon Sep 11 05:01:19 2017 
+** Last update Mon Oct 23 01:35:49 2017 
 */
 
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
-#include <getopt.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <netinet/ip.h>
@@ -19,6 +18,7 @@
 #include <linux/if_ether.h>
 #include "protocols.h"
 #include "network.h"
+#include "options.h"
 #include "utils.h"
 
 extern volatile int	g_sd;
@@ -40,38 +40,6 @@ inline static void	usage(const char * const prog_name)
 	  "\t\t\t\t\t\t-f \"udp && src 127.0.0.1 && src port 4242\".\n" \
 	  "\t\t\t\t\t\t-f \"tcp[13] & 2!=0\". (Shows only SYN packets).\n" \
 	  "\t-h, --help\t\tDisplays this message.\n", prog_name);
-}
-
-# define FORMAT int help; char *interface; int promiscuous; char *filter;
-static struct s_options {FORMAT}	get_args(int argc, char **argv)
-  {
-    # undef FORMAT
-    int					c;
-    int					index;
-    struct s_options			options = {.0, NULL, .0, NULL};
-    struct option			long_options[] =
-      {
-	{"interface", required_argument, NULL, 'i'},
-	{"filter", required_argument, NULL, 'f'},
-	{"promiscuous", no_argument, &options.promiscuous, 1},
-	{"help", no_argument, &options.help, 1},
-	{NULL, 0, NULL, 0}
-      };
-    while (1)
-      {
-	if ((c = getopt_long(argc, argv, "hpi:f:",
-			     long_options, &index)) == -1)
-	  break ;
-	else if (c == 'i')
-	  options.interface = optarg;
-	else if (c == 'f')
-	  options.filter = optarg;
-	else if (c == 'p')
-	  options.promiscuous = 1;
-	else if (c == 'h' || c == '?')
-	  options.help = 1;
-      }
-    return (options);
 }
 
 char			set_linux_socket_filter(const char * const filter_string)
