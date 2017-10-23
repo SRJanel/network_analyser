@@ -5,14 +5,14 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:50:07 2017 
-** Last update Sat Sep  9 02:04:36 2017 
+** Last update Mon Oct 23 03:16:52 2017 
 */
 
 #ifndef PROTOCOLS_H_
 # define PROTOCOLS_H_
 
-# include <linux/if_ether.h>
-# include <linux/in.h>
+# include <netinet/in.h>
+# include <netinet/if_ether.h>
 
 void			dump_arp_packet(const unsigned char *, const size_t);
 void			dump_ip_packet(const unsigned char *, const size_t);

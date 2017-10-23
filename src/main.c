@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <netinet/ip.h>
 #include <linux/filter.h>
-#include <linux/if_ether.h>
+#include <netinet/if_ether.h>
 #include "protocols.h"
 #include "network.h"
 #include "options.h"

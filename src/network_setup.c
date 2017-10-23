@@ -5,16 +5,15 @@
 ** Login SRJanel <n******.******s@epitech.eu>
 ** 
 ** Started on  Sat Sep  9 17:36:32 2017 
-** Last update Mon Sep 11 04:59:08 2017 
+** Last update Mon Oct 23 02:59:50 2017 
 */
 
 #include <string.h>
 #include <sys/ioctl.h>
-#include <sys/socket.h>
 #include <arpa/inet.h>
-#include <linux/if.h>
-#include <linux/if_packet.h>
-#include <linux/if_ether.h>
+#include <net/if.h>
+#include <netpacket/packet.h>
+#include <netinet/if_ether.h>
 #include "utils.h"
 
 int			g_sd;

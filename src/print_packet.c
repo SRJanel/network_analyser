@@ -5,17 +5,17 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:29:04 2017 
-** Last update Mon Sep 11 04:39:02 2017 
+** Last update Mon Oct 23 03:10:06 2017 
 */
 
 #include <ctype.h>
 #include <unistd.h>
 #include <arpa/inet.h>
-#include <linux/udp.h>
-#include <linux/tcp.h>
-#include <linux/icmp.h>
-#include <linux/ip.h>
-#include <linux/if_arp.h>
+#include <netinet/udp.h>
+#include <netinet/tcp.h>
+#include <netinet/ip_icmp.h>
+#include <netinet/ip.h>
+#include <net/if_arp.h>
 #include "utils.h"
 #include "protocols.h"
 
@@ -116,8 +116,11 @@ void		dump_tcp_segment(const unsigned char *packet,
   fprintf(stdout, " | Header Length: %u\n", tcphdr->doff * 4);
   fprintf(stdout, " | Flags:\n");
   fprintf(stdout, " | |-Reserved: %u\n", tcphdr->res1);
-  fprintf(stdout, " | |-Congestion Window Reduced: %u\n", tcphdr->cwr);
-  fprintf(stdout, " | |-ECN-Echo: %u\n", tcphdr->ece);
+  fprintf(stdout, " | |-Congestion Window Reduced: %u\n", tcphdr->res2 & 0xF0);
+  fprintf(stdout, " | |-ECN-Echo: %u\n", tcphdr->res2 & 0x0F);
+
+  /* fprintf(stdout, " | |-Congestion Window Reduced: %u\n", tcphdr->cwr); */
+  /* fprintf(stdout, " | |-ECN-Echo: %u\n", tcphdr->ece); */
   fprintf(stdout, " | |-Urgent: %u\n", tcphdr->urg);
   fprintf(stdout, " | |-Acknowledgment: %u\n", tcphdr->ack);
   fprintf(stdout, " | |-Push: %u\n", tcphdr->psh);
