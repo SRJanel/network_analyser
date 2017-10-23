@@ -136,8 +136,8 @@ void		dump_tcp_segment(const unsigned char *packet,
 			     + ((struct iphdr *)(packet + sizeof(struct ethhdr)))->ihl * 4));
 }
 
-void		dump_udp_segment(const unsigned char *packet,
-				 size_t packet_size)
+void		dump_udp_datagram(const unsigned char *packet,
+				  size_t packet_size)
 {
   struct udphdr	*udphdr;
   struct iphdr	*iphdr;

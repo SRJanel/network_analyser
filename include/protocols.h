@@ -17,7 +17,7 @@
 void			dump_arp_packet(const unsigned char *, const size_t);
 void			dump_ip_packet(const unsigned char *, const size_t);
 void			dump_tcp_segment(const unsigned char *, const size_t);
-void			dump_udp_segment(const unsigned char *, const size_t);
+void			dump_udp_datagram(const unsigned char *, const size_t);
 void			dump_icmp_packet(const unsigned char *, const size_t);
 void			dump_unknown_packet(const unsigned char *, const size_t);
 void			dump_ethernet_frame(const unsigned char *, const size_t);
@@ -37,7 +37,7 @@ typedef struct          s_protocols
   ENTRY(ARP = 0,	"ARP",		ETH_P_ARP,	&dump_arp_packet) \
   ENTRY(IPv4,		"IPv4",		ETH_P_IP,	&dump_ip_packet) \
   ENTRY(TCP,		"TCP",		IPPROTO_TCP,	&dump_tcp_segment) \
-  ENTRY(UDP,		"UDP",		IPPROTO_UDP,	&dump_udp_segment) \
+  ENTRY(UDP,		"UDP",		IPPROTO_UDP,	&dump_udp_datagram) \
   ENTRY(ICMP,		"ICMP",		IPPROTO_ICMP,	&dump_icmp_packet) \
   ENTRY(UNKNOWN,	"UNKNOWN",	0xDEAD,		&dump_unknown_packet) \
 
