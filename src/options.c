@@ -18,6 +18,7 @@ struct s_options			get_args(int argc, char **argv)
     int					index;
     struct s_options			options = {0};
     static struct option			long_options[] =
+    static struct option		long_options[] =
       {
 # define ENTRY(FIELD, REQ, SHORTARG) {MAKE_STRING(FIELD), REQ, NULL, SHORTARG},
 	OPTIONS_WITH_ARG_TABLE
