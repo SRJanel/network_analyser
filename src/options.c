@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.******s@epitech.eu>
 ** 
 ** Started on  Sat Oct 14 21:53:05 2017 
-** Last update Mon Dec  4 18:21:51 2017 
+** Last update Tue Dec  5 00:48:36 2017 
 */
 
 #include <unistd.h>
@@ -17,7 +17,6 @@ struct s_options			get_args(int argc, char **argv)
     int					c;
     int					index;
     struct s_options			options = {0};
-    static struct option			long_options[] =
     static struct option		long_options[] =
       {
 # define ENTRY(FIELD, REQ, SHORTARG) {MAKE_STRING(FIELD), REQ, NULL, SHORTARG},
