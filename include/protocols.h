@@ -5,7 +5,7 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 21:50:07 2017 
-** Last update Mon Oct 23 03:16:52 2017 
+** Last update Mon Dec  4 17:40:21 2017 
 */
 
 #ifndef PROTOCOLS_H_
@@ -43,12 +43,12 @@ typedef struct          s_protocols
 
 
 enum {
-# define ENTRY(a, b, c, d) a,
+# define ENTRY(ENUM, UNUSED1, UNUSED2, UNUSED3) ENUM,
   PROTOCOLS_TABLE
 # undef ENTRY
   LIMIT
 };
 
-extern t_protocols         g_protocols[LIMIT];
+/* extern t_protocols         g_protocols[LIMIT]; */
 
 #endif /* !PROTOCOLS_H_ */

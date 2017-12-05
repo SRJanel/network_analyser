@@ -5,15 +5,15 @@
 ** Login SRJanel <n******.*********@epitech.eu>
 ** 
 ** Started on  Sat Aug 19 22:27:44 2017 
-** Last update Mon Sep 11 04:40:34 2017 
+** Last update Mon Dec  4 17:40:31 2017 
 */
 
 #include "utils.h"
 #include "protocols.h"
 
-t_protocols         g_protocols[LIMIT] =
+static t_protocols         g_protocols[LIMIT] =
   {
-# define ENTRY(a, b, c, d) {b, c, d},
+# define ENTRY(UNUSED1, TAG, PROTO_VAL, FUNCTION) {TAG, PROTO_VAL, FUNCTION},
     PROTOCOLS_TABLE
 # undef ENTRY
   };
